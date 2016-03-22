@@ -45,12 +45,12 @@ def print_msg(timestamp, src, dst, msg, format_opts,
     indent = ' ' * indent if indent else ''
 
     if format_opts.show_header:
-        header_line = '%sheader: %s\n' % (indent, pretty(msg.header))
+        header_line = '{0!s}header: {1!s}\n'.format(indent, pretty(msg.header))
     else:
         header_line = ''
 
     if format_opts.show_fields:
-        fields_line = '%sfields: %s\n' % (indent, pretty(msg.args))
+        fields_line = '{0!s}fields: {1!s}\n'.format(indent, pretty(msg.args))
     else:
         fields_line = ''
 
@@ -72,7 +72,7 @@ def print_msg(timestamp, src, dst, msg, format_opts,
 
         outputstr = json.dumps(parts, indent=4) + '\n'
     else:
-        outputstr = '%s[%s] %s -> %s: method=%s, type=%s, seqid=%d\n%s%s' % (
+        outputstr = '{0!s}[{1!s}] {2!s} -> {3!s}: method={4!s}, type={5!s}, seqid={6:d}\n{7!s}{8!s}'.format(
             prefix, timestr, src, dst, msg.method, msg.type, msg.seqid,
             header_line, fields_line)
 
@@ -186,7 +186,7 @@ class LatencyPrinter(object):
                 self._seen += 1
 
                 # let the user know we are still working
-                self._output.write('\rCollecting (%d/%d)' % (
+                self._output.write('\rCollecting ({0:d}/{1:d})'.format(
                         self._seen, self._expected))
                 self._output.flush()
 
@@ -202,7 +202,7 @@ class LatencyPrinter(object):
                 unmatched += len(calls)
 
         if unmatched > 0:
-            self._output.write('%d unmatched calls\n' % unmatched)
+            self._output.write('{0:d} unmatched calls\n'.format(unmatched))
 
         return False  # we are done
 
@@ -235,5 +235,5 @@ class LatencyPrinter(object):
 
         data = [row(key, result) for key, result in results]
 
-        self._output.write('%s\n' % tabulate(data, headers=headers))
+        self._output.write('{0!s}\n'.format(tabulate(data, headers=headers)))
         self._output.flush()

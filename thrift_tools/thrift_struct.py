@@ -57,7 +57,7 @@ class ThriftStruct(object):
         return iter(self._fields)
 
     def __repr__(self):
-        return "fields=%s" % self.fields
+        return "fields={0!s}".format(self.fields)
 
     @classmethod
     def read(cls,
@@ -76,7 +76,7 @@ class ThriftStruct(object):
         while True:
             nfields += 1
             if nfields >= max_fields:
-                raise ObjectTooBig('too many fields: %d' % nfields)
+                raise ObjectTooBig('too many fields: {0:d}'.format(nfields))
 
             _, ftype, fid = proto.readFieldBegin()
             if ftype == TType.STOP:
@@ -159,7 +159,7 @@ class ThriftStruct(object):
         elif ftype == TType.LIST:
             (etype, size) = proto.readListBegin()
             if size > max_list_size:
-                raise ObjectTooBig('list too long: %d' % size)
+                raise ObjectTooBig('list too long: {0:d}'.format(size))
             value = []
             if read_values:
                 value = [_read(etype) for _ in xrange(size)]
@@ -170,7 +170,7 @@ class ThriftStruct(object):
         elif ftype == TType.MAP:
             (ktype, vtype, size) = proto.readMapBegin()
             if size > max_map_size:
-                raise ObjectTooBig('map too big: %d' % size)
+                raise ObjectTooBig('map too big: {0:d}'.format(size))
             value = {}
             if read_values:
                 for i in xrange(size):
@@ -185,7 +185,7 @@ class ThriftStruct(object):
         elif ftype == TType.SET:
             (etype, size) = proto.readSetBegin()
             if size > max_set_size:
-                raise ObjectTooBig('set too big: %d' % size)
+                raise ObjectTooBig('set too big: {0:d}'.format(size))
             value = set()
             if read_values:
                 for i in xrange(size):
@@ -237,7 +237,7 @@ class ThriftStruct(object):
         elif ftype == TType.UTF16:
             return 'utf16'
         else:
-            raise ValueError('Unknown type: %s' % ftype)
+            raise ValueError('Unknown type: {0!s}'.format(ftype))
 
 
 class ThriftField(object):
@@ -256,7 +256,7 @@ class ThriftField(object):
         return not self.__eq__(other)
 
     def __repr__(self):
-        return '(%s, %s, %s)' % (
+        return '({0!s}, {1!s}, {2!s})'.format(
             self.field_type, self.field_id, self._value)
 
     def is_isomorphic_to(self, other):

@@ -45,8 +45,8 @@ def get_flags():
                    '(long) + the message length (int), the padding would be of '
                    '12 bytes')
     p.add_argument('--protocol', type=str, default='binary',
-                   help='Use a specific protocol for reading structs. Options: %s' %
-                   VALID_PROTOCOLS)
+                   help='Use a specific protocol for reading structs. Options: {0!s}'.format(
+                   VALID_PROTOCOLS))
     p.add_argument('--debug', default=False, action='store_true',
                    help='Display debugging messages')
 
@@ -69,8 +69,8 @@ def run(flags, output=sys.stdout):
             elif flags.protocol == 'json':
                 protocol = TJSONProtocol
             else:
-                output.write('Unknown protocol: %s' % flags.protocol)
-                output.write('Valid options for --protocol are: %s' % VALID_PROTOCOLS)
+                output.write('Unknown protocol: {0!s}'.format(flags.protocol))
+                output.write('Valid options for --protocol are: {0!s}'.format(VALID_PROTOCOLS))
                 sys.exit(1)
 
             thrift_file = ThriftStructFile(
@@ -109,9 +109,9 @@ def run(flags, output=sys.stdout):
 
     what = 'structs' if flags.structs else 'msgs'
     if holes:
-        output.write('Read %s: %d\nHoles: %d\n' % (what, total_msg_read, len(holes)))
+        output.write('Read {0!s}: {1:d}\nHoles: {2:d}\n'.format(what, total_msg_read, len(holes)))
         if flags.show_holes:
             for idx, hole in enumerate(holes, start=1):
-                output.write('#%d: start=%d, size=%d' % (idx, hole[0], hole[1]))
+                output.write('#{0:d}: start={1:d}, size={2:d}'.format(idx, hole[0], hole[1]))
     else:
-        output.write('Read %s: %d\nNo bytes skipped' % (what, total_msg_read))
+        output.write('Read {0!s}: {1:d}\nNo bytes skipped'.format(what, total_msg_read))

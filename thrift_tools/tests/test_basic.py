@@ -73,7 +73,7 @@ class BasicTestCase(unittest.TestCase):
 
     def _test_protocol(self, protoname):
         queue = deque()
-        pcap_file = get_pcap_path('calc-service-%s' % protoname)
+        pcap_file = get_pcap_path('calc-service-{0!s}'.format(protoname))
         handler = StreamHandler(queue, read_values=True, debug=True)
 
         sniffer = Sniffer('ignore', 9090, handler, offline=pcap_file)

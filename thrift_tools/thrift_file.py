@@ -39,7 +39,7 @@ class ThriftFile(object):
             try:
                 fh = open(file_name)
             except IOError as ex:
-                raise ThriftFile.Error('Could not open %s: %s' % (file_name, ex))
+                raise ThriftFile.Error('Could not open {0!s}: {1!s}'.format(file_name, ex))
 
         if HAS_MMAP and file_name != '-':
             self._data = mmap.mmap(fh.fileno(), 0, access=mmap.ACCESS_READ)
@@ -99,7 +99,7 @@ class ThriftMessageFile(ThriftFile):
                 return (msg, None) if skipped == 0 else (msg, (start, skipped))
             except Exception, ex:
                 if self._debug:
-                    print('Bad message: %s (idx=%d)' % (ex, idx))
+                    print('Bad message: {0!s} (idx={1:d})'.format(ex, idx))
 
         # nothing found
         return (None, None)
@@ -142,7 +142,7 @@ class ThriftStructFile(ThriftFile):
                 return (tstruct, None) if skipped == 0 else (tstruct, (start, skipped))
             except Exception, ex:
                 if self._debug:
-                    print('Bad message: %s (idx=%d)' % (ex, idx))
+                    print('Bad message: {0!s} (idx={1:d})'.format(ex, idx))
 
         # nothing found
         return (None, None)

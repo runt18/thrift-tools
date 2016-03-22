@@ -82,7 +82,7 @@ class MsgHandler(object):
             return True
 
         self._methods.add(msg.method)
-        print('On port %d, method %s was called' % (self._port, msg.method))
+        print('On port {0:d}, method {1!s} was called'.format(self._port, msg.method))
 
         return True  # must return true, or sniffer will exit
 

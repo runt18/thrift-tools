@@ -65,7 +65,7 @@ class StreamHandler(object):
         # EMSGSIZE
         if len(context.bytes) >= self._max_message_size:
             if self._debug:
-                print('Dropping bytes, dropped size: %d' % len(context.bytes))
+                print('Dropping bytes, dropped size: {0:d}'.format(len(context.bytes)))
             context.bytes = ''
             return
 

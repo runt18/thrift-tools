@@ -38,7 +38,7 @@ def get_ip_packet(data, client_port, server_port, is_loopback=False):
     try:
         header.unpack(data)
     except Exception as ex:
-        raise ValueError('Bad header: %s' % ex)
+        raise ValueError('Bad header: {0!s}'.format(ex))
 
     tcp_p = getattr(header.data, 'data', None)
     if type(tcp_p) != dpkt.tcp.TCP:

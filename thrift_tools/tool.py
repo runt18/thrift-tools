@@ -41,8 +41,8 @@ def get_flags():
     p.add_argument('--debug', default=False, action='store_true',
                    help='Display debugging messages')
     p.add_argument('--protocol', type=str, default='auto',
-                   help='Use a specific protocol. Options: %s' %
-                   VALID_PROTOCOLS)
+                   help='Use a specific protocol. Options: {0!s}'.format(
+                   VALID_PROTOCOLS))
 
     cmds = p.add_subparsers(dest='cmd')
 
@@ -96,7 +96,7 @@ def main():
         printer = printer_cls(format_opts)
         read_values = flags.show_values or flags.show_all
     else:
-        print('Unknown command: %s' % flags.cmd)
+        print('Unknown command: {0!s}'.format(flags.cmd))
         sys.exit(1)
 
     # which protocol to use
@@ -109,8 +109,8 @@ def main():
     elif flags.protocol == 'json':
         protocol = TJSONProtocol
     else:
-        print('Unknown protocol: %s' % flags.protocol)
-        print('Valid options for --protocol are: %s' % VALID_PROTOCOLS)
+        print('Unknown protocol: {0!s}'.format(flags.protocol))
+        print('Valid options for --protocol are: {0!s}'.format(VALID_PROTOCOLS))
         sys.exit(1)
 
     # launch the thrift message sniffer
@@ -129,7 +129,7 @@ def main():
     message_sniffer = MessageSniffer(options, printer)
 
     def sigusr_handler(*args):
-        print('message sniffer status: %s' % message_sniffer.status(),
+        print('message sniffer status: {0!s}'.format(message_sniffer.status()),
               file=sys.stderr)
 
     # wire up sigusr1 for debugging info

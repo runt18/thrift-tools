@@ -52,7 +52,7 @@ class ThriftMessage(object):
         return self._header
 
     def __str__(self):
-        return 'method=%s, type=%s, seqid=%s, header=%s, fields=%s' % (
+        return 'method={0!s}, type={1!s}, seqid={2!s}, header={3!s}, fields={4!s}'.format(
             self.method, self.type, self.seqid, self.header, str(self.args))
 
     @property
@@ -131,7 +131,7 @@ class ThriftMessage(object):
         # suspicious method names
         valid = range(33, 127)
         if any(ord(char) not in valid for char in method):
-            raise ValueError('invalid method name' % method)
+            raise ValueError('invalid method name'.format(*method))
 
         args = ThriftStruct.read(
             proto,
@@ -198,4 +198,4 @@ class ThriftMessage(object):
         elif mtype == TMessageType.ONEWAY:
             return 'oneway'
         else:
-            raise ValueError('Unknown message type: %s' % mtype)
+            raise ValueError('Unknown message type: {0!s}'.format(mtype))

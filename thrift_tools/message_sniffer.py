@@ -55,16 +55,16 @@ class MessageSniffer(Thread):
 
     def status(self):
         return """
-alive:                  %s
-queue size:             %d
-seen streams:           %d
-unrecognized streams:   %d
-seen thrift msgs:       %d
-pending thrift msgs:    %d
-sniffer alive:          %s
-pending ip packets:     %d
-dispatcher alive:       %s
-""" % (self.isAlive(),
+alive:                  {0!s}
+queue size:             {1:d}
+seen streams:           {2:d}
+unrecognized streams:   {3:d}
+seen thrift msgs:       {4:d}
+pending thrift msgs:    {5:d}
+sniffer alive:          {6!s}
+pending ip packets:     {7:d}
+dispatcher alive:       {8!s}
+""".format(self.isAlive(),
        len(self._queue),
        self._handler.seen_streams,
        self._handler.unrecognized_streams,
@@ -114,11 +114,11 @@ dispatcher alive:       %s
                         running = False
                         break
                 except Exception as ex:
-                    print('handler exception: %s' % ex)
+                    print('handler exception: {0!s}'.format(ex))
 
         # leaving...
         if len(self._queue):
-            print('%d messages left in the queue' % len(self._queue))
+            print('{0:d} messages left in the queue'.format(len(self._queue)))
 
     def stop(self, wait_for_stopped=False):
         if not self.isAlive():

@@ -29,7 +29,7 @@ class Stream(object):
         self._lock_packets = Lock()
 
     def __str__(self):
-        return '%s<->%s (length: %d, remaining: %d, seq_id: %d)' % (
+        return '{0!s}<->{1!s} (length: {2:d}, remaining: {3:d}, seq_id: {4:d})'.format(
             self.src, self.dst, self.length, self.remaining, self._next_seq_id)
 
     @property
@@ -132,9 +132,9 @@ class Dispatcher(Thread):
                 src_ip = get_ip(ip_p, ip_p.src)
                 dst_ip = get_ip(ip_p, ip_p.dst)
 
-                src = intern('%s:%s' % (src_ip, ip_p.data.sport))
-                dst = intern('%s:%s' % (dst_ip, ip_p.data.dport))
-                key = intern('%s<->%s' % (src, dst))
+                src = intern('{0!s}:{1!s}'.format(src_ip, ip_p.data.sport))
+                dst = intern('{0!s}:{1!s}'.format(dst_ip, ip_p.data.dport))
+                key = intern('{0!s}<->{1!s}'.format(src, dst))
 
                 stream = self._streams.get(key)
                 if stream is None:
@@ -153,7 +153,7 @@ class Dispatcher(Thread):
                     try:
                         handler(stream)
                     except Exception as ex:
-                        print('handler exception: %s' % ex)
+                        print('handler exception: {0!s}'.format(ex))
             except Exception:
                 time.sleep(0.00001)
 
@@ -199,7 +199,7 @@ class Sniffer(Thread):
         self._dispatcher.add_handler(stream_handler)
 
     def run(self):
-        pfilter = 'port %d' % self._port
+        pfilter = 'port {0:d}'.format(self._port)
         try:
             kwargs = {
                 'filter': pfilter,
@@ -215,9 +215,9 @@ class Sniffer(Thread):
             sniff(**kwargs)
         except Exception as ex:
             if 'Not a pcap capture file' in str(ex):
-                print('%s is not a valid pcap file' % self._offline)
+                print('{0!s} is not a valid pcap file'.format(self._offline))
                 return
-            print('Error: %s: %s (device: %s)' % (ex, traceback.format_exc(), self._iface))
+            print('Error: {0!s}: {1!s} (device: {2!s})'.format(ex, traceback.format_exc(), self._iface))
         finally:
             if self._offline:
                 # drain dispatcher

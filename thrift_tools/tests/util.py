@@ -7,8 +7,8 @@ _resources_dir = os.path.join(
 
 
 def get_pcap_path(capture_file):
-    return os.path.join(_resources_dir, '%s.pcap' % (capture_file))
+    return os.path.join(_resources_dir, '{0!s}.pcap'.format((capture_file)))
 
 
 def get_log_path(log_file):
-    return os.path.join(_resources_dir, '%s.logfile' % (log_file))
+    return os.path.join(_resources_dir, '{0!s}.logfile'.format((log_file)))
